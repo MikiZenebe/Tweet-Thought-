@@ -1,7 +1,11 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+});
 
 export default function Home() {
   return (
@@ -14,9 +18,9 @@ export default function Home() {
       </Head>
 
       <main>
-        <div className="  h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-10 shadow-2xl shadow-[#ecececb9]">
+        <div className="h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-10 ">
           <div>
-            <div className="border-gray-200 border-2 max-w-[300px] mx-auto h-[100px]  rounded-lg ">
+            <div className="bg-[#1B2730] max-w-[300px] mx-auto h-[100px]  rounded-lg ">
               {" "}
               Miki
             </div>

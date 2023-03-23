@@ -8,9 +8,6 @@
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-
-
-
 }
 * {
   box-sizing: border-box;
@@ -26,8 +23,8 @@ body {
 }
 
 body {
-  color: black;
-  background: #ffffff
+  color: white;
+  background: #06141D
 }
 
 a {
