@@ -1,3 +1,4 @@
+import Message from "@/components/Message";
 import Head from "next/head";
 
 export default function Home() {
@@ -10,16 +11,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <div className="h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-10 ">
-          <div>
-            <div className="bg-[#1B2730] max-w-[300px] mx-auto h-[100px]  rounded-lg ">
-              {" "}
-              Miki
-            </div>
-          </div>
-        </div>
-      </main>
+      <div className="h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-4 ">
+        <h2 className="text-center">See other dev's thought</h2>
+
+        <Message />
+      </div>
     </>
   );
 }

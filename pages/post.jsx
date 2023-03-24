@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 function Post() {
   const route = useRouter();
@@ -16,7 +17,15 @@ function Post() {
   //submit post
   const submitPost = async (e) => {
     e.preventDefault();
-    console.log("Posted");
+
+    //Check for description
+    if (!post.description) {
+      toast.error("The field is empty 😔", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+      });
+      return;
+    }
 
     //New Post / add to firestore
     const collRef = collection(db, "posts");
@@ -28,6 +37,11 @@ function Post() {
       username: user.displayName,
     });
     setPost({ description: "" });
+
+    toast.success("Post successfully ❤️", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 1000,
+    });
     return route.push("/");
   };
 
@@ -38,7 +52,10 @@ function Post() {
           onSubmit={submitPost}
           className="bg-[#1B2730] my-20 p-6 rounded-lg"
         >
-          <h1 className="text-gray-300">What's on your mind?</h1>
+          <div className="flex items-center gap-4">
+            <img src={user.photoURL} alt="" className="w-8 h-8 rounded-full" />
+            <h1 className="text-gray-300">What's on your mind?</h1>
+          </div>
 
           <div>
             <textarea
