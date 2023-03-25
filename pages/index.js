@@ -1,7 +1,31 @@
 import Message from "@/components/Message";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import { db } from "@/lib/firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 export default function Home() {
+  //State to fetch posts
+  const [allPosts, setAllPosts] = useState([]);
+
+  //Fetch Posts from db
+  useEffect(() => {
+    const getPosts = async () => {
+      const collRef = collection(db, "posts");
+
+      //Sorted by
+      const q = query(collRef, orderBy("timestamp", "desc"));
+
+      const unSub = onSnapshot(q, (snapshot) => {
+        setAllPosts(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      });
+      return unSub;
+    };
+    getPosts();
+  }, []);
+
   return (
     <>
       <Head>
@@ -12,9 +36,13 @@ export default function Home() {
       </Head>
 
       <div className="h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-4 ">
-        <h2 className="text-center">See other dev's thought</h2>
+        <h2 className="text-center text-2xl font-semibold">
+          See other dev's thought
+        </h2>
 
-        <Message />
+        {allPosts.map((post) => (
+          <Message key={post.id} {...post}></Message>
+        ))}
       </div>
     </>
   );
