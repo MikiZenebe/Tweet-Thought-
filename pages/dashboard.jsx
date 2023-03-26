@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import Message from "@/components/Message";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import Link from "next/link";
 
 function Dashboard() {
   const route = useRouter();
@@ -54,12 +55,14 @@ function Dashboard() {
             return (
               <Message key={post.id} {...post}>
                 <div className="flex mt-5 gap-4 mx-10">
-                  <button className=" text-[13px] flex items-center gap-2 bg-[#3f4a53] px-3 py-1 rounded-md text-blue-300">
-                    <span>
-                      <AiFillEdit />
-                    </span>
-                    Edit
-                  </button>
+                  <Link href={{ pathname: "/post", query: post }}>
+                    <button className=" text-[13px] flex items-center gap-2 bg-[#3f4a53] px-3 py-1 rounded-md text-blue-300">
+                      <span>
+                        <AiFillEdit />
+                      </span>
+                      Edit
+                    </button>
+                  </Link>
 
                   <button
                     onClick={() => deletePost(post.id)}

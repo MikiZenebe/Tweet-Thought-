@@ -2,7 +2,13 @@ import { auth, db } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 
 function Post() {
@@ -13,6 +19,9 @@ function Post() {
 
   //access the user
   const [user, loading] = useAuthState(auth);
+
+  //Update Data
+  const queryData = route.query;
 
   //submit post
   const submitPost = async (e) => {
@@ -27,23 +36,50 @@ function Post() {
       return;
     }
 
-    //New Post / add to firestore
-    const collRef = collection(db, "posts");
-    await addDoc(collRef, {
-      ...post,
-      timestamp: serverTimestamp(),
-      user: user.uid,
-      avatar: user.photoURL,
-      username: user.displayName,
-    });
-    setPost({ description: "" });
+    //Update existing post
+    if (post?.hasOwnProperty("id")) {
+      const docRef = doc(db, "posts", post.id);
+      const updatedPost = { ...post, timestamp: serverTimestamp() };
+      await updateDoc(docRef, updatedPost);
 
-    toast.success("Post successfully ❤️", {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 1000,
-    });
-    return route.push("/");
+      toast.success("Post has been update 🚀", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+      });
+
+      return route.push("/");
+    } else {
+      //Make a new post
+      const collectionRef = collection(db, "posts");
+      await addDoc(collectionRef, {
+        ...post,
+        timestamp: serverTimestamp(),
+        user: user.uid,
+        avatar: user.photoURL,
+        username: user.displayName,
+      });
+      setPost({ description: "" });
+
+      toast.success("Post has been made 🚀", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+      });
+
+      return route.push("/");
+    }
   };
+
+  //Check user for updating the data
+  useEffect(() => {
+    const checkUser = () => {
+      if (loading) return;
+      if (!user) route.push("/auth/login");
+      if (queryData.id) {
+        setPost({ description: queryData.description, id: queryData.id });
+      }
+    };
+    checkUser();
+  }, [user, loading]);
 
   return (
     <div>
@@ -53,8 +89,12 @@ function Post() {
           className="bg-[#1B2730] my-20 p-6 rounded-lg"
         >
           <div className="flex items-center gap-4">
-            <img src={user.photoURL} alt="" className="w-8 h-8 rounded-full" />
-            <h1 className="text-gray-300">What's on your mind?</h1>
+            <img src={user?.photoURL} alt="" className="w-8 h-8 rounded-full" />
+            <h1 className="text-gray-300">
+              {post.hasOwnProperty("id")
+                ? "Edit Your Post"
+                : "What's on your mind?"}
+            </h1>
           </div>
 
           <div>
