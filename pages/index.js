@@ -3,6 +3,8 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import Link from "next/link";
+import { AiOutlineComment } from "react-icons/ai";
 
 export default function Home() {
   //State to fetch posts
@@ -41,7 +43,16 @@ export default function Home() {
         </h2>
 
         {allPosts.map((post) => (
-          <Message key={post.id} {...post}></Message>
+          <Message key={post.id} {...post}>
+            <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
+              <button className=" text-[14px] flex items-center gap-2 bg-[#3f4a53] px-3 py-1 mt-5 mx-10 rounded-md text-white">
+                <span>
+                  <AiOutlineComment />
+                </span>
+                Comment
+              </button>
+            </Link>
+          </Message>
         ))}
       </div>
     </>
