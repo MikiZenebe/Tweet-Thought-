@@ -51,7 +51,10 @@ export default function Home() {
                 <span>
                   <AiOutlineComment />
                 </span>
-                <span> {post.comments.length}</span>
+                <span>
+                  {" "}
+                  {post.comments.length > 0 ? post.comments.length : 0}
+                </span>
               </button>
             </Link>
           </Message>
