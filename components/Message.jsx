@@ -5,8 +5,8 @@ export default function Message({
   description,
   timestamp,
 }) {
-  const date = timestamp?.toDate().toLocaleTimeString("en-US");
-  const time = timestamp?.toDate().toDateString();
+  const date = timestamp && timestamp.toDate().toLocaleTimeString("en-US");
+  const time = timestamp && timestamp.toDate().toDateString();
   console.log(time);
   return (
     <div className="bg-[#1B2730] max-w-[350px] mx-auto h-[150px]  rounded-lg mt-10 p-3 flex flex-col">

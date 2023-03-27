@@ -1,10 +1,12 @@
 import Message from "@/components/Message";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { db } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { AiOutlineComment } from "react-icons/ai";
+import { Router } from "next/router";
+import { toast } from "react-toastify";
 
 export default function Home() {
   //State to fetch posts
