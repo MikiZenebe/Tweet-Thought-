@@ -47,11 +47,11 @@ export default function Home() {
         {allPosts.map((post) => (
           <Message key={post.id} {...post}>
             <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
-              <button className=" text-[14px] flex items-center gap-2 bg-[#3f4a53] px-3 py-1 mt-5 mx-10 rounded-md text-white">
+              <button className=" text-[14px] flex items-center gap-1 bg-[#3f4a53] px-3 py-1 mt-5 mx-10 rounded-md text-white">
                 <span>
                   <AiOutlineComment />
                 </span>
-                Comment
+                <span> {post.comments.length}</span>
               </button>
             </Link>
           </Message>

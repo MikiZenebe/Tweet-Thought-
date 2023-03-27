@@ -17,7 +17,7 @@ export default function Message({
 
       <div className=" mx-10">
         <p className="text-[12px] text-gray-400 mt-[-5px]">
-          {time} {date}
+          {time} <span className="font-semibold italic">{date}</span>
         </p>
         <p className="mt-2 ">{description}</p>
       </div>

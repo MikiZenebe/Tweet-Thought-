@@ -3,7 +3,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
 import { toast } from "react-toastify";
-import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  onSnapshot,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 
 export default function Details() {
   const router = useRouter();
@@ -39,11 +46,26 @@ export default function Details() {
     setMessge("");
   };
 
+  useEffect(() => {
+    //Fetch Comments
+    const getComments = async () => {
+      const docRef = doc(db, "posts", routeData.id);
+      const unSub = onSnapshot(docRef, (snapshot) => {
+        setAllMessage(snapshot.data().comments);
+      });
+
+      return unSub;
+    };
+
+    if (!router.isReady) return;
+    getComments();
+  }, [router.isReady]);
+
   return (
-    <div>
+    <div className=" overflow-y-hidden">
       <Message {...routeData}></Message>
 
-      <div>
+      <div className="h-[100vh]">
         <div className="max-w-[350px] mx-auto my-4 flex">
           <input
             className="w-full bg-[#28343E] outline outline-[#28343E]  rounded-lg p-2"
@@ -59,6 +81,33 @@ export default function Details() {
           >
             Comment
           </button>
+        </div>
+
+        <div className="max-w-[350px] mx-auto ">
+          <h2 className="mt-16 text-[20px]">Comments</h2>
+
+          {allMessage.map((comment) => (
+            <div className="bg-[#1B2730]  h-[120px]  rounded-lg mt-2 p-3 flex flex-col">
+              <div className="flex gap-2 items-center text-gray-300">
+                <img
+                  src={comment.avatar}
+                  alt=""
+                  className="w-8 h-8 rounded-full"
+                />
+                <p className="text-green-300">{comment.username}</p>
+              </div>
+              <p className="text-[12px] text-gray-400 mt-[-5px] mx-10">
+                <span>
+                  {comment.time && comment.time.toDate().toDateString()}
+                </span>
+                <span className="mx-1 font-semibold italic">
+                  {comment.time &&
+                    comment.time.toDate().toLocaleTimeString("en-US")}
+                </span>
+              </p>
+              <div className="mx-10 mt-2">{comment.message}</div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
