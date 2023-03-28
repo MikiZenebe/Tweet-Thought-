@@ -40,6 +40,7 @@ export default function Login() {
       exit="exit"
       initial="hidden"
       animate="show"
+      className="h-[100vh]"
     >
       <div className="bg-[#1B2730] max-w-[300px] mx-auto h-[120px] p-4 mt-32 rounded-lg">
         <div className="text-center text-gray-300">
