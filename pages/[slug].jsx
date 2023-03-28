@@ -11,6 +11,8 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
+import { card, pageAnimation } from "../animations/animation";
+import { motion } from "framer-motion";
 
 export default function Details() {
   const router = useRouter();
@@ -62,11 +64,22 @@ export default function Details() {
   }, [router.isReady]);
 
   return (
-    <div className=" overflow-y-hidden">
+    <motion.div
+      variants={pageAnimation}
+      exit="exit"
+      initial="hidden"
+      animate="show"
+      className=" overflow-y-hidden"
+    >
       <Message {...routeData}></Message>
 
       <div className="h-[100vh]">
-        <div className="max-w-[350px] mx-auto my-4 flex">
+        <motion.div
+          variants={card}
+          initial="hidden"
+          animate="show"
+          className="max-w-[350px] mx-auto my-4 flex"
+        >
           <input
             className="w-full bg-[#28343E] outline outline-[#28343E]  rounded-lg p-2"
             onChange={(e) => setMessge(e.target.value)}
@@ -77,17 +90,22 @@ export default function Details() {
 
           <button
             onClick={submitComments}
-            className="bg-gradient-to-br from-blue-400 to-cyan-500 rounded-tr-lg rounded-lg ml-2 px-2 py-1 font-medium"
+            className="btn bg-gradient-to-br from-blue-400 to-cyan-500 rounded-tr-lg rounded-lg ml-2 px-2 py-1 font-medium"
           >
             Comment
           </button>
-        </div>
+        </motion.div>
 
         <div className="max-w-[350px] mx-auto ">
           <h2 className="mt-16 text-[20px]">Comments</h2>
 
-          {allMessage.map((comment) => (
-            <div className="bg-[#1B2730]  h-[120px]  rounded-lg mt-2 p-3 flex flex-col">
+          {allMessage?.map((comment) => (
+            <motion.div
+              variants={card}
+              initial="hidden"
+              animate="show"
+              className="bg-[#1B2730]  h-[120px]  rounded-lg mt-2 p-3 flex flex-col"
+            >
               <div className="flex gap-2 items-center text-gray-300">
                 <img
                   src={comment.avatar}
@@ -106,10 +124,10 @@ export default function Details() {
                 </span>
               </p>
               <div className="mx-10 mt-2">{comment.message}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

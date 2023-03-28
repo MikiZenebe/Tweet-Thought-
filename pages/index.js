@@ -1,12 +1,12 @@
 import Message from "@/components/Message";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { auth, db } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { AiOutlineComment } from "react-icons/ai";
-import { Router } from "next/router";
-import { toast } from "react-toastify";
+import { pageAnimation } from "../animations/animation";
+import { motion } from "framer-motion";
 
 export default function Home() {
   //State to fetch posts
@@ -39,7 +39,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-4 ">
+      <motion.div
+        variants={pageAnimation}
+        exit="exit"
+        initial="hidden"
+        animate="show"
+        className="h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-4 "
+      >
         <h2 className="text-center text-2xl font-semibold">
           See other dev's thought
         </h2>
@@ -52,14 +58,13 @@ export default function Home() {
                   <AiOutlineComment />
                 </span>
                 <span>
-                  {" "}
-                  {post.comments.length > 0 ? post.comments.length : 0}
+                  {post.comments?.length > 0 ? post.comments.length : 0}
                 </span>
               </button>
             </Link>
           </Message>
         ))}
-      </div>
+      </motion.div>
     </>
   );
 }

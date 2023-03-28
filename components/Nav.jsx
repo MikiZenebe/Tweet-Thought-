@@ -22,7 +22,7 @@ function Nav() {
           {!user && (
             <div>
               <Link href={"/auth/login"}>
-                <button className="bg-gradient-to-br from-white to-gray-200 py-1 px-2 rounded-lg text-white font-medium flex items-center gap-2 ">
+                <button className="btn bg-gradient-to-br from-white to-gray-200 py-1 px-2 rounded-lg text-white font-medium flex items-center gap-2 ">
                   <AiOutlineLogin className="text-[#0086da] " />{" "}
                   <span className="text-black">Login</span>
                 </button>
@@ -33,7 +33,7 @@ function Nav() {
           {user && (
             <div className="flex gap-6">
               <Link href={"/post"}>
-                <button className="bg-gradient-to-br from-white to-gray-200 py-1 px-2 rounded-lg text-white font-medium flex items-center gap-2 ">
+                <button className="btn bg-gradient-to-br from-white to-gray-200 py-1 px-2 rounded-lg text-white font-medium flex items-center gap-2 ">
                   <AiFillEdit className="text-[#0086da] " />{" "}
                   <span className="text-black">Post</span>
                 </button>

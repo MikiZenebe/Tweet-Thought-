@@ -4,6 +4,8 @@ import { auth } from "@/lib/firebase";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
+import { pageAnimation } from "../../animations/animation";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const route = useRouter();
@@ -33,7 +35,12 @@ export default function Login() {
   }, [user]);
 
   return (
-    <div>
+    <motion.div
+      variants={pageAnimation}
+      exit="exit"
+      initial="hidden"
+      animate="show"
+    >
       <div className="bg-[#1B2730] max-w-[300px] mx-auto h-[120px] p-4 mt-32 rounded-lg">
         <div className="text-center text-gray-300">
           <h1>Join to share your thoughts</h1>
@@ -51,6 +58,6 @@ export default function Login() {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

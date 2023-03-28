@@ -13,6 +13,8 @@ import {
 import Message from "@/components/Message";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Link from "next/link";
+import { card, pageAnimation } from "../animations/animation";
+import { motion } from "framer-motion";
 
 function Dashboard() {
   const route = useRouter();
@@ -47,7 +49,13 @@ function Dashboard() {
 
   return (
     <div>
-      <div className="max-w-[400px] mx-auto py-4 h-[100vh]">
+      <motion.div
+        variants={pageAnimation}
+        exit="exit"
+        initial="hidden"
+        animate="show"
+        className="max-w-[400px] mx-auto py-4 h-[100vh]"
+      >
         <h2 className="text-center text-2xl font-semibold">Your Posts</h2>
 
         <div>
@@ -80,12 +88,12 @@ function Dashboard() {
         </div>
 
         <button
-          className="my-6 mx-6 px-2 py-1 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-700 text-gray-200"
+          className="btn my-6 mx-6 px-2 py-1 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-700 text-gray-200"
           onClick={() => auth.signOut()}
         >
           Sign out
         </button>
-      </div>
+      </motion.div>
     </div>
   );
 }

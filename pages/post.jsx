@@ -10,6 +10,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { card, pageAnimation } from "../animations/animation";
+import { motion } from "framer-motion";
 
 function Post() {
   const route = useRouter();
@@ -82,8 +84,18 @@ function Post() {
   }, [user, loading]);
 
   return (
-    <div>
-      <div className="max-w-[350px] mx-auto ">
+    <motion.div
+      variants={pageAnimation}
+      exit="exit"
+      initial="hidden"
+      animate="show"
+    >
+      <motion.div
+        variants={card}
+        initial="hidden"
+        animate="show"
+        className="max-w-[350px] mx-auto "
+      >
         <form
           onSubmit={submitPost}
           className="bg-[#1B2730] my-20 p-6 rounded-lg"
@@ -110,13 +122,13 @@ function Post() {
 
           <button
             type="submit"
-            className="bg-gradient-to-br from-blue-400 to-cyan-500 w-full py-1 my-3 rounded-lg font-bold "
+            className="btn bg-gradient-to-br from-blue-400 to-cyan-500 w-full py-1 my-3 rounded-lg font-bold "
           >
             Post
           </button>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
