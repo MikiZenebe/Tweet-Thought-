@@ -37,7 +37,7 @@ export default function Home() {
         exit="exit"
         initial="hidden"
         animate="show"
-        className="h-[100vh] justify-center max-w-[400px] mx-auto rounded-2xl py-4 "
+        className="h-[auto] justify-center max-w-[400px] mx-auto rounded-2xl py-4 "
       >
         <h2 className="text-center text-2xl font-semibold">
           See other dev's thought
