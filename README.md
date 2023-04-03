@@ -1,5 +1,5 @@
 # Devs-Thought
-https://devs-thought.vercel.app/
+https://devs-thought.vercel.app
 
 Welcome to Dev Thought website, a tweet website that can handle users post and commetns. Our site is built with Next.js, Tailwind CSS, Framer Motion for animation, Firebase, and React-Icons.
 ![Screenshot (119)](https://user-images.githubusercontent.com/102186185/229569298-c6c3140b-fcfe-4265-acc1-d2d8c367cfcb.png)
